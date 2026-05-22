@@ -6,6 +6,9 @@ object camion {
     var cosas = []
 
     method cargar(unaCosa) {
+
+        unaCosa.reaccionarALaCarga()
+
         cosas.add(unaCosa)
     }
 
@@ -22,7 +25,7 @@ object camion {
     }
 
     method hayAlgoQuePesa(unPeso) {
-      return  cosas.any { cosa => cosa.peso() == unPeso }
+        return cosas.any { cosa => cosa.peso() == unPeso }
     }
 
     method primeraCosaPeligrosa(nivel) {
@@ -30,20 +33,21 @@ object camion {
     }
 
     method cosasMasPeligrosasQue(nivel) {
-       return cosas.filter { cosa => cosa.peligrosidad() > nivel }
+        return cosas.filter { cosa => cosa.peligrosidad() > nivel }
     }
 
     method cosasMasPeligrosasQueCosa(unaCosa) {
-        self.cosasMasPeligrosasQue(unaCosa.peligrosidad())
+        return self.cosasMasPeligrosasQue(unaCosa.peligrosidad())
     }
 
     method estaExcedido() {
        return self.pesoTotal() > pesoMaximo
     }
 
-   method puedeCircular(nivelMaximo) {
-     return !self.estaExcedido() && cosas.all { cosa => cosa.peligrosidad() <= nivelMaximo }
-}
+    method puedeCircular(nivelMaximo) {
+        return !self.estaExcedido() &&
+        cosas.all { cosa => cosa.peligrosidad() <= nivelMaximo }
+    }
 
     method hayAlgoEntre(min,max) {
         return cosas.any { cosa =>
@@ -53,6 +57,10 @@ object camion {
     }
 
     method cosaMasPesada() {
-      return  cosas.max { cosa => cosa.peso() }
+        return cosas.max { cosa => cosa.peso() }
+    }
+
+    method totalBultos() {
+        return cosas.sum { cosa => cosa.bultos() }
     }
 }

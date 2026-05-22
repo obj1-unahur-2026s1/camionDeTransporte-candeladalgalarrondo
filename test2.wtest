@@ -1,0 +1,66 @@
+import cosas2.*
+import camion2.*
+
+describe "tests parte 2" {
+
+    test "total de bultos" {
+
+        bumblebee.transformarseEnRobot()
+
+        arenaGranel.kilos(150)
+
+        bateriaAntiaerea.cargarMisiles()
+
+        paqueteLadrillos.cantidad(80)
+
+        embalajeSeguridad.contenido(paqueteLadrillos)
+
+        camion.cargar(bumblebee)
+        camion.cargar(arenaGranel)
+        camion.cargar(bateriaAntiaerea)
+        camion.cargar(embalajeSeguridad)
+
+        assert.equals(7, camion.totalBultos())
+    }
+
+    test "bumblebee se transforma al cargarlo" {
+
+        camion.cargar(bumblebee)
+
+        assert.equals(30, bumblebee.peligrosidad())
+    }
+
+    test "arena pierde 10 kilos al cargarla" {
+
+        arenaGranel.kilos(150)
+
+        camion.cargar(arenaGranel)
+
+        assert.equals(140, arenaGranel.peso())
+    }
+
+    test "paquete agrega 12 ladrillos" {
+
+        paqueteLadrillos.cantidad(80)
+
+        camion.cargar(paqueteLadrillos)
+
+        assert.equals(184, paqueteLadrillos.peso())
+    }
+
+    test "bateria carga misiles automaticamente" {
+
+        camion.cargar(bateriaAntiaerea)
+
+        assert.equals(300, bateriaAntiaerea.peso())
+    }
+
+    test "residuos radioactivos aumentan peso" {
+
+        residuosRadioactivos.kilos(30)
+
+        camion.cargar(residuosRadioactivos)
+
+        assert.equals(45, residuosRadioactivos.peso())
+    }
+}

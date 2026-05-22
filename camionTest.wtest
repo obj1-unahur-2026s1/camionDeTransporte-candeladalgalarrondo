@@ -1,9 +1,133 @@
+
+import cosas.*
 import camion.*
 
-describe "group of test for camion" {
+describe "test camion" {
 
-  test "first test" {
-    assert.that(true)
-  }
+    test "peso total" {
 
+        bumblebee.transformarseEnRobot()
+
+        arenaGranel.kilos(150)
+
+        bateriaAntiaerea.cargarMisiles()
+
+        paqueteLadrillos.cantidad(80)
+
+        embalajeSeguridad.contenido(paqueteLadrillos)
+
+        camion.cargar(bumblebee)
+        camion.cargar(arenaGranel)
+        camion.cargar(bateriaAntiaerea)
+        camion.cargar(embalajeSeguridad)
+
+        assert.equals(2410, camion.pesoTotal())
+    }
+
+    test "pesos pares" {
+
+        bumblebee.transformarseEnRobot()
+
+        arenaGranel.kilos(150)
+
+        bateriaAntiaerea.cargarMisiles()
+
+        paqueteLadrillos.cantidad(80)
+
+        embalajeSeguridad.contenido(paqueteLadrillos)
+
+        camion.cargar(bumblebee)
+        camion.cargar(arenaGranel)
+        camion.cargar(bateriaAntiaerea)
+        camion.cargar(embalajeSeguridad)
+
+        assert.that(camion.pesosSonPares())
+    }
+
+    test "hay algo que pesa 150" {
+
+        arenaGranel.kilos(150)
+
+        camion.cargar(arenaGranel)
+
+        assert.that(camion.hayAlgoQuePesa(150))
+    }
+
+    test "primera cosa peligrosa" {
+
+        bateriaAntiaerea.cargarMisiles()
+
+        camion.cargar(bateriaAntiaerea)
+
+        assert.equals(
+            bateriaAntiaerea,
+            camion.primeraCosaPeligrosa(100)
+        )
+    }
+
+    test "cosas mas peligrosas que 20" {
+
+        bumblebee.transformarseEnRobot()
+
+        bateriaAntiaerea.cargarMisiles()
+
+        camion.cargar(bumblebee)
+        camion.cargar(bateriaAntiaerea)
+
+        assert.equals(
+            [bumblebee, bateriaAntiaerea],
+            camion.cosasMasPeligrosasQue(20)
+        )
+    }
+
+    test "camion no excedido" {
+
+        bumblebee.transformarseEnRobot()
+
+        arenaGranel.kilos(150)
+
+        bateriaAntiaerea.cargarMisiles()
+
+        camion.cargar(bumblebee)
+        camion.cargar(arenaGranel)
+        camion.cargar(bateriaAntiaerea)
+
+        assert.notThat(camion.estaExcedido())
+    }
+
+    test "puede circular" {
+
+        bumblebee.transformarseEnRobot()
+
+        bateriaAntiaerea.cargarMisiles()
+
+        camion.cargar(bumblebee)
+        camion.cargar(bateriaAntiaerea)
+
+        assert.that(camion.puedeCircular(150))
+    }
+
+    test "hay algo entre 100 y 200" {
+
+        arenaGranel.kilos(150)
+
+        camion.cargar(arenaGranel)
+
+        assert.that(camion.hayAlgoEntre(100,200))
+    }
+
+    test "cosa mas pesada" {
+
+        bumblebee.transformarseEnRobot()
+
+        arenaGranel.kilos(150)
+
+        camion.cargar(bumblebee)
+        camion.cargar(arenaGranel)
+
+        assert.equals(
+            bumblebee,
+            camion.cosaMasPesada()
+        )
+    }
 }
